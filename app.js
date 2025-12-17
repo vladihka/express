@@ -13,7 +13,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use((req, res, next) => {
+app.use("/admin",(req, res, next) => {
     const key = req.query.key;
     if (key === "secret") {
         next(); // ключ верный, продолжаем обработку
@@ -62,6 +62,22 @@ app.get("/hello", (req, res) => {
   const name = req.query.name || "Guest";
   res.send(`Hello, ${name}!`);
 });
+
+app.get("/error", (req, res) => {
+  throw new Error("Тестовая ошибка");
+});
+
+
+// 404 middleware
+app.use((req, res) => {
+  res.status(404).send("Страница не найдена");
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Что-то пошло не так!");
+});
+
 
 
 app.listen(port, () => {
