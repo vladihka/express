@@ -2,8 +2,32 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+// Middleware — функция, которая выполняется при каждом запросе
+app.use((req, res, next) => {
+  console.log(`Запрос: ${req.method} ${req.url}`);
+  next(); // передаёт управление дальше
+});
+
+app.use((req, res, next) => {
+    console.log("Время:", new Date().toISOString());
+    next();
+});
+
+app.use((req, res, next) => {
+    const key = req.query.key;
+    if (key === "secret") {
+        next(); // ключ верный, продолжаем обработку
+    } else {
+        res.status(403).send("Forbidden: Invalid key");
+    }
+})
+
 app.get("/", (req, res) => {
   res.send("Home page");
+});
+
+app.get("/admin", (req, res) => {
+  res.send("Admin page");
 });
 
 app.get("/about", (req, res) => {
