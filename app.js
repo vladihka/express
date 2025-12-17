@@ -22,6 +22,11 @@ app.use("/admin",(req, res, next) => {
     }
 })
 
+// Подключаем статические файлы из папки public
+// Можно задать префикс URL
+app.use("/static", express.static("public"));
+
+
 app.get("/", (req, res) => {
   res.send("Home page");
 });
