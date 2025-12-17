@@ -2,6 +2,10 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+// Подключаем маршруты
+const usersRouter = require("./routes/users");
+app.use("/users", usersRouter);
+
 // Middleware — функция, которая выполняется при каждом запросе
 app.use((req, res, next) => {
   console.log(`Запрос: ${req.method} ${req.url}`);
@@ -43,6 +47,8 @@ app.get("/test-hello", (req, res) => {
   res.render("test-hello", { title: "Hello Page", name });
 });
 
+
+
 app.get("/", (req, res) => {
   res.send("Home page");
 });
@@ -57,18 +63,6 @@ app.get("/about", (req, res) => {
 
 app.get("/contact", (req, res) => {
   res.send("Contact page");
-});
-
-app.get("/users", (req, res) => {
-  res.send("GET users");
-});
-
-app.post("/users", (req, res) => {
-  res.send("POST users");
-});
-
-app.get("/users/:id", (req, res) => {
-  res.send(`User ID: ${req.params.id}`);
 });
 
 app.get("/search", (req, res) => {
