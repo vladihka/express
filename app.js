@@ -26,6 +26,22 @@ app.use("/admin",(req, res, next) => {
 // Можно задать префикс URL
 app.use("/static", express.static("public"));
 
+// Указываем, что будем использовать EJS
+app.set("view engine", "ejs");
+
+app.get("/test", (req, res) => {
+  res.render("index", { title: "Главная страница", name: "Vlad" });
+});
+
+app.get("/test-users", (req, res) => {
+  const users = ["Alice", "Bob", "Charlie"];
+  res.render("test-users", { users });
+});
+
+app.get("/test-hello", (req, res) => {
+  const name = req.query.name || "Guest";
+  res.render("test-hello", { title: "Hello Page", name });
+});
 
 app.get("/", (req, res) => {
   res.send("Home page");
